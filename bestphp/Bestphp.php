@@ -23,7 +23,7 @@ class Bestphp
 
     public function run()
     {
-        spl_autoload_register([$this, 'loadClass']);
+        spl_autoload_register([$this, 'loadClass']); // 注册自动加载
         $this->setReporting(); // 检测开发环境
         $this->removeMagicQuotes(); // 检测并删除敏感字符
         $this->unregisterGlobals(); // 检测自定义全局变量并移除
@@ -83,11 +83,13 @@ class Bestphp
     {
         if (APP_DEBUG === true) {
             error_reporting(E_ALL);
+            // 错误回显，错误回显会暴露出非常多的敏感信息, 一般常用与开发环境。
             ini_set('display_errors', 'On');
         } else {
             error_reporting(E_ALL);
             ini_set('display_errors', 'Off');
-            ini_set('log_errors', 'On');
+            // 一旦开启了错误日志记录功能，个人强烈建议设置错误日志目录
+            ini_set('log_errors', 'On'); // 错误日志
         }
     }
 
@@ -170,11 +172,11 @@ class Bestphp
         $controllerName = $this->config['defaultController'];
         $actionName = $this->config['defaultAction'];
         $param = [];
-
         $url = $_SERVER['REQUEST_URL'];
+
         // 清除?之后的内容
         $position = strpos($url, '?');
-        $url = $position === false ? $url : substr($url, $position);
+        $url = $position === false ? $url : substr($url, $position); // TODO 待测试
         // 去除前后的正斜杠
         $url = trim($url, '/');
         if ($url) {
