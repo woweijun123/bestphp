@@ -169,8 +169,8 @@ class Bestphp
      */
     public function route()
     {
-        $controllerName = $this->config['defaultController'];
-        $actionName = $this->config['defaultAction'];
+        $controllerName = $this->config['default_controller'];
+        $actionName = $this->config['default_action'];
         $param = [];
         $url = $_SERVER['REQUEST_URL'];
 
