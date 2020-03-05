@@ -37,16 +37,15 @@ class View
      * @email 1054487195@qq.com
      * @DateTime 2020/3/4 16:51
      */
-    public function view()
+    public function render()
     {
         extract($this->variables);
-        $defaultHeader = APP_PATH . 'app/views/header/php';
-        $defaultFooter = APP_PATH . 'app/views/footer.php';
+        $defaultHeader = APP_PATH . 'app/view/header.php';
+        $defaultFooter = APP_PATH . 'app/view/footer.php';
 
-        $controllerHeader = APP_PATH . 'app/views' . $this->_controller . '/header.php';
-        $controllerFooter = APP_PATH . 'app/views' . $this->_controller . '/footer.php';
-        $controllerLayout = APP_PATH . 'app/views/' . $this->_controller . '/' . $this->_action . '.php';
-
+        $controllerHeader = APP_PATH . 'app/view' . $this->_controller . '/header.php';
+        $controllerFooter = APP_PATH . 'app/view' . $this->_controller . '/footer.php';
+        $controllerLayout = APP_PATH . 'app/view/' . $this->_controller . '/' . $this->_action . '.php';
         // 页头文件
         if (is_file($controllerHeader)) {
             include $controllerHeader;
@@ -65,7 +64,7 @@ class View
         if (is_file($controllerFooter)) {
             include $controllerFooter;
         } else {
-            include $controllerFooter;
+            include $defaultFooter;
         }
     }
 }

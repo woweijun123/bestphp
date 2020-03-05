@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controller;
 
 use app\model\ItemModel;
@@ -12,16 +13,25 @@ use bestphp\base\Controller;
  */
 class ItemController extends Controller
 {
+    private $itemModel;
+
+    public function __construct($controller, $action)
+    {
+        parent::__construct($controller, $action);
+        $this->itemModel = new ItemModel();
+    }
+
+
     // 首页方法, 测试框架自定义DB查询
-    public function index(ItemModel $itemModel)
+    public function index()
     {
         $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
         if ($keyword) {
-            $items = $itemModel->search($keyword);
+            $items = $this->itemModel->search($keyword);
         } else {
             // 查询所有内容, 并按倒序排列输出
             // where()方法可不传入参数, 或者省略
-            $items = $itemModel->where()->order(['id DESC'])->fetchAll();
+            $items = $this->itemModel->where()->order(['id DESC'])->fetchAll();
         }
 
         $this->assign('title', '全部条目');
@@ -39,7 +49,7 @@ class ItemController extends Controller
     public function detail()
     {
         // 通过?占位符传入$id参数
-        $item = (new ItemModel)->where(['id = ?'])->fetch();
+        $item = $this->itemModel->where(['id = ?'])->fetch();
         $this->assign('title', '条目详情');
         $this->assign('item', $item);
         $this->render();
@@ -54,7 +64,7 @@ class ItemController extends Controller
     public function add()
     {
         $data['item_name'] = $_POST['value'];
-        $count = (new ItemModel)->add($data);
+        $count = $this->itemModel->add($data);
 
         $this->assign('title', '添加成功');
         $this->assign('count', $count);
@@ -73,7 +83,7 @@ class ItemController extends Controller
         $item = array();
         if ($id) {
             // 通过名称占位符传入参数
-            $item = (new ItemModel())->where(["id = :id"], [':id' => $id])->fetch();
+            $item = $this->itemModel->where(["id = :id"], [':id' => $id])->fetch();
         }
 
         $this->assign('title', '管理条目');
@@ -90,7 +100,7 @@ class ItemController extends Controller
     public function update()
     {
         $data = ['id' => $_POST['id'], 'item_name' => $_POST['value']];
-        $count = (new ItemModel)->where(['id = :id'], [':id' => $data['id']])->update($data);
+        $count = $this->itemModel->where(['id = :id'], [':id' => $data['id']])->update($data);
 
         $this->assign('title', '修改成功');
         $this->assign('count', $count);
@@ -106,7 +116,7 @@ class ItemController extends Controller
      */
     public function delete($id = null)
     {
-        $count = (new ItemModel)->delete($id);
+        $count = $this->itemModel->delete($id);
 
         $this->assign('title', '删除成功');
         $this->assign('count', $count);

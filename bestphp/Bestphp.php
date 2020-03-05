@@ -172,11 +172,11 @@ class Bestphp
         $controllerName = $this->config['default_controller'];
         $actionName = $this->config['default_action'];
         $param = [];
-        $url = $_SERVER['REQUEST_URL'];
+        $url = $_SERVER['REQUEST_URI'];
 
         // 清除?之后的内容
         $position = strpos($url, '?');
-        $url = $position === false ? $url : substr($url, $position); // TODO 待测试
+        $url = $position === false ? $url : substr($url, 0, $position);
         // 去除前后的正斜杠
         $url = trim($url, '/');
         if ($url) {
@@ -192,13 +192,9 @@ class Bestphp
             $param = $urlArray ? $urlArray : [];
         }
         // 判断控制器和操作是否存在
-        $controller = 'app\\controllers\\' . $controllerName . 'Controller';
-        if (!class_exists($controller)) {
-            exit($controller . '控制器不存在');
-        }
-        if (!method_exists($controller, $actionName)) {
-            exit($actionName . '方法不存在');
-        }
+        $controller = 'app\\controller\\' . $controllerName . 'Controller';
+        if (!class_exists($controller)) exit($controller . '控制器不存在');
+        if (!method_exists($controller, $actionName)) exit($actionName . '方法不存在');
         // 如果控制器和操作名存在，则实例化控制器，因为控制器对象里面
         // 还会用到控制器名和操作名，所以实例化的时候把他们俩的名称也
         // 传进去。结合Controller基类一起看
