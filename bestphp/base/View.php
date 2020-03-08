@@ -40,12 +40,12 @@ class View
     public function render()
     {
         extract($this->variables);
-        $defaultHeader = APP_PATH . 'app/view/header.php';
-        $defaultFooter = APP_PATH . 'app/view/footer.php';
+        $defaultHeader = ROOT_PATH . 'app/view/header.php';
+        $defaultFooter = ROOT_PATH . 'app/view/footer.php';
 
-        $controllerHeader = APP_PATH . 'app/view' . $this->_controller . '/header.php';
-        $controllerFooter = APP_PATH . 'app/view' . $this->_controller . '/footer.php';
-        $controllerLayout = APP_PATH . 'app/view/' . $this->_controller . '/' . $this->_action . '.php';
+        $controllerHeader = ROOT_PATH . 'app/view' . $this->_controller . '/header.php';
+        $controllerFooter = ROOT_PATH . 'app/view' . $this->_controller . '/footer.php';
+        $controllerLayout = ROOT_PATH . 'app/view/' . $this->_controller . '/' . $this->_action . '.php';
         // 页头文件
         if (is_file($controllerHeader)) {
             include $controllerHeader;

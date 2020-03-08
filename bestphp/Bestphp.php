@@ -23,6 +23,7 @@ class Bestphp
 
     public function run()
     {
+        $this->init(); // 初始化应用
         spl_autoload_register([$this, 'loadClass']); // 注册自动加载
         $this->setReporting(); // 检测开发环境
         $this->removeMagicQuotes(); // 检测并删除敏感字符
@@ -46,7 +47,7 @@ class Bestphp
             $file = $classMap[$className];
         } elseif (strpos($className, '\\') !== false) {
             // 包含应用(application目录)文件
-            $file = APP_PATH . strtr($className, '\\', '/') . '.php';
+            $file = ROOT_PATH . strtr($className, '\\', '/') . '.php';
             if (!is_file($file)) return;
         } else {
             return;
@@ -202,5 +203,16 @@ class Bestphp
         // $dispatch保存控制器实例化后的对象，我们就可以调用它的方法，
         // 也可以像方法中传入参数，以下等同于：$dispatch->$actionName($param)
         call_user_func_array([$dispatch, $actionName], $param);
+    }
+
+    /**
+     * 初始化应用
+     * @Author Wcj
+     * @email 1054487195@qq.com
+     * @DateTime 2020/3/8 17:40
+     */
+    private function init()
+    {
+        if (is_file(APP_PATH . 'common.php')) include APP_PATH . 'common.php'; // 加载公共函数文件
     }
 }

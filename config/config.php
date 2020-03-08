@@ -1,12 +1,11 @@
 <?php
-// 数据库配置
-$config['db']['host'] = 'localhost';
-$config['db']['username'] = 'root';
-$config['db']['password'] = '123456';
-$config['db']['dbname'] = 'project';
-
-// 默认控制器和操作名
-$config['default_controller'] = 'Item';
-$config['default_action'] = 'index';
-
-return $config;
+return [
+    'db' => [
+        'host' => 'localhost',
+        'username' => 'root',
+        'password' => '123456',
+        'dbname' => 'project',
+    ],
+    'default_controller' => 'Item',
+    'default_action' => 'index',
+];
