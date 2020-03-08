@@ -214,5 +214,6 @@ class Bestphp
     private function init()
     {
         if (is_file(APP_PATH . 'common.php')) include APP_PATH . 'common.php'; // 加载公共函数文件
+        $this->config = require ROOT_PATH . 'config/config.php'; // 加载配置文件
     }
 }
