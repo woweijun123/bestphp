@@ -2,9 +2,6 @@
 
 namespace bestphp;
 
-// 框架根目录
-defined('CORE_PATH') or define('CORE_PATH', __DIR__);
-
 /**
  * bestphp框架核心
  * @Author   Wcj
@@ -41,7 +38,6 @@ class Bestphp
     public function loadClass($className)
     {
         $classMap = $this->classMap();
-
         if (isset($classMap[$className])) {
             // 包含内核文件
             $file = $classMap[$className];
@@ -66,11 +62,11 @@ class Bestphp
     public function classMap()
     {
         return [
-            'bestphp\base\Controller' => CORE_PATH . '/base/Controller.php',
-            'bestphp\base\Model' => CORE_PATH . '/base/Model.php',
-            'bestphp\base\View' => CORE_PATH . '/base/View.php',
-            'bestphp\db\Db' => CORE_PATH . '/db/Db.php',
-            'bestphp\db\Sql' => CORE_PATH . '/db/Sql.php',
+            'bestphp\base\Controller' => ROOT_PATH . 'bestphp/base/Controller.php',
+            'bestphp\base\Model' => ROOT_PATH . 'bestphp/base/Model.php',
+            'bestphp\base\View' => ROOT_PATH . 'bestphp/base/View.php',
+            'bestphp\db\Db' => ROOT_PATH . 'bestphp/db/Db.php',
+            'bestphp\db\Sql' => ROOT_PATH . 'bestphp/db/Sql.php',
         ];
     }
 
